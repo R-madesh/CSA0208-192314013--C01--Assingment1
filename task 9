@@ -1,0 +1,47 @@
+ #include <stdio.h>
+int main()
+{
+    int units;
+    float energy_charge, fixed_charge = 50.00;
+    float total_bill;
+
+    printf("===== ELECTRICITY BILL TESTING =====\n");
+
+    printf(" Units Consumed:150 \n ");
+    scanf("%d", &units);
+
+    // Validate units
+    if (units < 0)
+    {
+        printf("Invalid Units!\n");
+        return 1;
+    }
+
+    // Calculate energy charge
+    if (units <= 100)
+    {
+        energy_charge = 0;
+    }
+    else if (units <= 200)
+    {
+        energy_charge = (units - 100) * 2.25;
+    }
+    else
+    {
+        energy_charge = 100 * 2.25;
+        energy_charge += (units - 200) * 4.50;
+    }
+
+    // Calculate total bill
+    total_bill = fixed_charge + energy_charge;
+
+    // Display bill
+    printf("\n===== ELECTRICITY BILL =====\n");
+
+    printf("Units Consumed: %d\n", units);
+    printf("Fixed Charge: Rs. %.2f\n", fixed_charge);
+    printf("Energy Charge: Rs. %.2f\n", energy_charge);
+    printf("Total Bill: Rs. %.2f\n", total_bill);
+
+    return 0;
+}
