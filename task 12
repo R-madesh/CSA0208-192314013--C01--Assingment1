@@ -1,0 +1,115 @@
+#include <stdio.h>
+#define MAX_READINGS 35040
+int main()
+{
+    unsigned long long wh;
+    unsigned long long normal_wh = 0;
+    unsigned long long peak_wh = 0;
+
+    long long rate, fixed_charge;
+    long long normal_charge, peak_charge, total_bill;
+
+    int hour, n;
+
+    FILE *fp;
+
+    // Read tariff from file
+    fp = fopen("tariff.txt", "r");
+
+    if (fp == NULL)
+    {
+        printf("Tariff file not found!");
+        return 1;
+    }
+
+    if (fscanf(fp, "%lld %lld",
+               &rate, &fixed_charge) != 2 ||
+        rate < 0 || fixed_charge < 0)
+    {
+        printf("Invalid tariff file!");
+        fclose(fp);
+        return 1;
+    }
+
+    fclose(fp);
+
+    printf("===== SMART METER BILLING =====\n");
+
+    printf(" Number of readings:3\n ");
+
+    if (scanf("%d", &n) != 1 ||
+        n < 1 || n > MAX_READINGS)
+    {
+        printf("Invalid number of readings!");
+        return 1;
+    }
+
+    // Read 15-minute meter readings
+    for (int i = 0; i < n; i++)
+    {
+        printf("\n hour (0-23):10\n ");
+
+        if (scanf("%d", &hour) != 1 ||
+            hour < 0 || hour > 23)
+        {
+            printf("Invalid hour!");
+            return 1;
+        }
+
+        printf(" energy in watt-hours:1000\n ");
+
+        if (scanf("%llu", &wh) != 1)
+        {
+            printf("Invalid energy reading!");
+            return 1;
+        }
+
+        // Peak time: 6 PM to 10 PM
+        if (hour >= 18 && hour < 22)
+        {
+            peak_wh += wh;
+        }
+        else
+        {
+            normal_wh += wh;
+        }
+    }
+
+    // Calculate normal charge in paise
+    normal_charge =
+        (normal_wh * rate + 500) / 1000;
+
+    // Peak charge is 20% higher
+    peak_charge =
+        (peak_wh * rate * 120 + 50000) / 100000;
+
+    // Calculate total bill
+    total_bill = fixed_charge +
+                 normal_charge +
+                 peak_charge;
+
+    printf("\n======= ELECTRICITY BILL =======\n");
+
+    printf("Normal Energy: %llu Wh\n", normal_wh);
+    printf("Peak Energy: %llu Wh\n", peak_wh);
+
+    printf("Normal Charge: Rs. %lld.%02lld\n",
+           normal_charge / 100,
+           normal_charge % 100);
+
+    printf("Peak Charge: Rs. %lld.%02lld\n",
+           peak_charge / 100,
+           peak_charge % 100);
+
+    printf("Fixed Charge: Rs. %lld.%02lld\n",
+           fixed_charge / 100,
+           fixed_charge % 100);
+
+    printf("-------------------------------\n");
+
+    printf("Total Bill: Rs. %lld.%02lld\n",
+           total_bill / 100,
+           total_bill % 100);
+
+    return 0;
+}
