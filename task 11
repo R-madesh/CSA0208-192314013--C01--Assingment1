@@ -1,0 +1,87 @@
+#include <stdio.h>
+
+// Define constants
+#define SLAB1 100
+#define SLAB2 200
+
+#define RATE1 0
+#define RATE2 225
+#define RATE3 450
+
+#define FIXED_CHARGE 5000LL
+#define METER_MAX 65536
+
+// Function to calculate bill
+long long calculate_bill(unsigned int units)
+{
+    long long bill = FIXED_CHARGE;
+
+    if (units <= SLAB1)
+    {
+        bill += RATE1;
+    }
+    else if (units <= SLAB2)
+    {
+        bill += (units - SLAB1) * RATE2;
+    }
+    else
+    {
+        bill += 100 * RATE2;
+        bill += (units - SLAB2) * RATE3;
+    }
+
+    return bill;
+}
+
+int main()
+{
+    int house_no;
+    unsigned int previous, current, units;
+    long long bill;
+
+    printf("===== GRAMA JYOTHI ELECTRICITY BILL =====\n");
+
+    printf(" House Number: 101\n");
+    if (scanf("%d", &house_no) != 1 || house_no <= 0)
+    {
+        printf("Invalid House Number!\n");
+        return 1;
+    }
+
+    printf(" Previous Reading: 1000\n");
+    if (scanf("%u", &previous) != 1 ||
+        previous >= METER_MAX)
+    {
+        printf("Invalid Previous Reading!\n");
+        return 1;
+    }
+
+    printf(" Current Reading: 1150\n");
+    if (scanf("%u", &current) != 1 ||
+        current >= METER_MAX)
+    {
+        printf("Invalid Current Reading!\n");
+        return 1;
+    }
+
+    // Calculate units with rollover
+    units = (current - previous) % METER_MAX;
+
+    // Calculate bill
+    bill = calculate_bill(units);
+
+    // Display bill
+    printf("\n---------- ELECTRICITY BILL ----------\n");
+
+    printf("House Number: %d\n", house_no);
+    printf("Previous Reading: %u\n", previous);
+    printf("Current Reading: %u\n", current);
+    printf("Units Consumed: %u\n", units);
+
+    printf("Fixed Charge: Rs. 50.00\n");
+
+    printf("Total Bill: Rs. %lld.%02lld\n",
+           bill / 100, bill % 100);
+    printf("--------------------------------------\n");
+    return 0;
+}
