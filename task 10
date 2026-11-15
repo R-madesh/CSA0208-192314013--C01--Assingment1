@@ -1,0 +1,58 @@
+ #include <stdio.h>
+#include <limits.h>
+
+int main()
+{
+    int houses[] = {4000, 60000, 800000};
+
+    // Each house bill is Rs. 162.50
+    int bill_paise = 16250;
+
+    printf("===== TASK 10 =====\n");
+
+    printf("Size of int = %zu bytes\n", sizeof(int));
+    printf("Size of long = %zu bytes\n", sizeof(long));
+    printf("Size of long long = %zu bytes\n",
+           sizeof(long long));
+
+    printf("\nMaximum int = %d\n", INT_MAX);
+    printf("Maximum long = %ld\n", LONG_MAX);
+    printf("Maximum long long = %lld\n", LLONG_MAX);
+
+    for (int i = 0; i < 3; i++)
+    {
+        long long total_paise = 0;
+        float total_float = 0.0f;
+
+        // Calculate total using both methods
+        for (int j = 0; j < houses[i]; j++)
+        {
+            total_paise += bill_paise;
+            total_float += 162.50f;
+        }
+
+        printf("\nHouseholds = %d\n", houses[i]);
+
+        printf("Integer paise total = Rs. %lld.%02lld\n",
+               total_paise / 100,
+               total_paise % 100);
+
+        printf("Float total = Rs. %.2f\n", total_float);
+
+        printf("Difference = Rs. %.2f\n",
+               (double)total_float -
+               ((double)total_paise / 100.0));
+
+        // Check whether int can store the total
+        if (total_paise > INT_MAX)
+        {
+            printf("int: Overflow risk\n");
+        }
+        else
+        {
+            printf("int: Safe\n");
+        }
+    }
+
+    return 0;
+}
