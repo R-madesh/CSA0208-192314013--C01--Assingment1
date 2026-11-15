@@ -1,0 +1,45 @@
+ #include <stdio.h>
+#include "billing.h"
+
+// Calculate electricity bill
+long calculate_bill(int units)
+{
+    long bill = FIXED_CHARGE;
+
+    if (units <= 100)
+    {
+        bill += RATE1;
+    }
+    else if (units <= 200)
+    {
+        bill += (units - 100) * RATE2;
+    }
+    else
+    {
+        bill += 100 * RATE2;
+        bill += (units - 200) * RATE3;
+    }
+
+    return bill;
+}
+
+int main()
+{
+    int units = 150;
+
+    long bill = calculate_bill(units);
+
+    printf("===== GRAMA JYOTHI =====\n");
+
+    printf("Units Consumed: %d\n", units);
+
+    printf("Total Bill: Rs. %ld.%02ld\n",
+           bill / 100, bill % 100);
+
+#ifdef DEBUG
+    printf("DEBUG: Fixed Charge = 5000 paise\n");
+    printf("DEBUG: Total Bill = %ld paise\n", bill);
+#endif
+
+    return 0;
+}
