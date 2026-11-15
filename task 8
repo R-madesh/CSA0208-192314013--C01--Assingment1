@@ -1,0 +1,42 @@
+ #include <stdio.h>
+
+#define FIXED_CHARGE 5000
+#define RATE2 225
+#define RATE3 450
+
+// Function to calculate bill
+long long calculate_bill(int units)
+{
+    long long bill = FIXED_CHARGE;
+
+    if (units <= 100)
+    {
+        bill += 0;
+    }
+    else if (units <= 200)
+    {
+        bill += (units - 100) * RATE2;
+    }
+    else
+    {
+        bill += 100 * RATE2;
+        bill += (units - 200) * RATE3;
+    }
+
+    return bill;
+}
+
+int main()
+{
+    int units = 150;
+
+    long long bill = calculate_bill(units);
+
+    printf("===== GRAMA JYOTHI =====\n");
+    printf("Units Consumed: %d\n", units);
+
+    printf("Total Bill: Rs. %lld.%02lld\n",
+           bill / 100, bill % 100);
+
+    return 0;
+}
