@@ -1,0 +1,51 @@
+#include <stdio.h>
+int main()
+{
+    int house_no;
+    int previous, current;
+    int units;
+
+    float energy_charge;
+    float fixed_charge = 50.00;
+    float total_bill;
+    printf("GRAMA JYOTHI ELECTRICITY BILL \n");
+    printf(" House Number: 101 \n");
+    scanf("%d", &house_no);
+    printf("Previous Reading:1000 \n ");
+    scanf("%d", &previous);
+    printf(" Current Reading:1150 \n ");
+    scanf("%d", &current);
+    // Calculate units consumed
+    if (current >= previous)
+    {
+        units = current - previous;
+    }
+    else
+    {
+        units = (65536 - previous) + current;
+    }
+    // Calculate energy charge
+    if (units <= 100)
+    {
+        energy_charge = 0;
+    }
+    else if (units <= 200)
+    {
+        energy_charge = (units - 100) * 2.25;
+    }
+    else
+    {
+        energy_charge = 100 * 2.25;
+        energy_charge += (units - 200) * 4.50;
+    }
+    // Calculate total bill
+    total_bill = fixed_charge + energy_charge;
+    // Display bill
+    printf("\n ELECTRICITY BILL\n");
+    printf("House Number: %d\n", house_no);
+    printf("Units Consumed: %d\n", units);
+    printf("Energy Charge: Rs. %.2f\n", energy_charge);
+    printf("Fixed Charge: Rs. %.2f\n", fixed_charge);
+    printf("Total Bill: Rs. %.2f\n", total_bill);
+    return 0;
+}
