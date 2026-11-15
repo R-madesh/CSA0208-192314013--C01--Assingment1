@@ -1,0 +1,41 @@
+#include <stdio.h>
+int main()
+{
+    int units = 150;
+    int a = 5, b = 2;
+
+    float price = 2.25;
+    double total;
+
+    printf("===== TASK 7 =====\n");
+
+    // Implicit conversion
+    total = units * price;
+
+    printf("Implicit Conversion = %.2f\n", total);
+
+    // Integer division
+    printf("Integer Division = %d\n", a / b);
+
+    // Floating point division
+    printf("Float Division = %.2f\n", (float)a / b);
+
+    // Explicit type casting
+    double value = (double)units / 100;
+
+    printf("Type Casting = %.2f\n", value);
+
+    // Money calculation using paise
+    long long bill = 16250;
+
+    printf("Bill = Rs. %lld.%02lld\n",
+           bill / 100, bill % 100);
+
+    // Demonstrate integer truncation
+    double amount = 162.75;
+    int result = (int)amount;
+
+    printf("After Casting = %d\n", result);
+
+    return 0;
+}
