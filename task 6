@@ -1,0 +1,91 @@
+#include <stdio.h>
+int main()
+{
+    int house_no;
+    int previous, current;
+    unsigned int units;
+
+    long long energy_charge;
+    long long fixed_charge = 5000;
+    long long total_bill;
+
+    printf("===== GRAMA JYOTHI =====\n");
+
+    // Read house number
+    printf(" House Number: 101\n");
+
+    if (scanf("%d", &house_no) != 1 || house_no <= 0)
+    {
+        printf("Invalid House Number!\n");
+        return 1;
+    }
+
+    // Read previous reading
+    printf("Previous Reading: 1000\n ");
+
+    if (scanf("%d", &previous) != 1)
+    {
+        printf("Invalid Input!\n");
+        return 1;
+    }
+
+    // Read current reading
+    printf(" Current Reading: 1150\n ");
+
+    if (scanf("%d", &current) != 1)
+    {
+        printf("Invalid Input!\n");
+        return 1;
+    }
+
+    // Validate readings
+    if (previous < 0 || previous > 65535 ||
+        current < 0 || current > 65535)
+    {
+        printf("Invalid Meter Reading!\n");
+        return 1;
+    }
+
+    // Calculate units
+    units = (current - previous + 65536) % 65536;
+
+    // Calculate energy charge
+    if (units <= 100)
+    {
+        energy_charge = 0;
+    }
+    else if (units <= 200)
+    {
+        energy_charge = (units - 100) * 225;
+    }
+    else
+    {
+        energy_charge = 100 * 225;
+        energy_charge += (units - 200) * 450;
+    }
+
+    // Calculate total bill
+    total_bill = fixed_charge + energy_charge;
+
+    // Print bill
+    printf("\n===== ELECTRICITY BILL =====\n");
+
+    printf("House Number: %d\n", house_no);
+    printf("Previous Reading: %d\n", previous);
+    printf("Current Reading: %d\n", current);
+    printf("Units Consumed: %u\n", units);
+
+    printf("Energy Charge: Rs. %lld.%02lld\n",
+           energy_charge / 100,
+           energy_charge % 100);
+
+    printf("Fixed Charge: Rs. %lld.%02lld\n",
+           fixed_charge / 100,
+           fixed_charge % 100);
+
+    printf("Total Bill: Rs. %lld.%02lld\n",
+           total_bill / 100,
+           total_bill % 100);
+
+    return 0;
+}
